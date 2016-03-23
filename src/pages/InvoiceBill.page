@@ -1,0 +1,104 @@
+<apex:page standardController="Invoice_Statement__c" extensions="LineItemExtension" renderAs="pdf">
+   <apex:pageBlock >
+       <div id="rightDivInvoice" style=" float:right; padding-right:10px; padding-top:20px;">
+       <apex:pageBlockSection >      
+          <apex:form >
+               <apex:outputPanel id="headerPanel">         
+                   <h2><b><p style="color:#800080;">INVOICE</p></b></h2>
+                   <apex:pageBlockTable value="{!Invoice_Statement__c}" var="invoiceValues" align="right" border="1px" cellspacing="3px" cellpadding="3px" id="header" >
+                       <apex:column value="{!Invoice_Statement__c.name}"/>
+                       <apex:column value="{!Invoice_Statement__c.Date__c}"/>         
+                    </apex:pageBlockTable>
+                </apex:outputPanel>
+          </apex:form>
+      </apex:pageBlockSection>
+      </div>
+       
+      <div id="companyDetailAllignment" style="position:absolute; top:80px;">
+          <apex:pageBlockSection columns="1" >      
+              <apex:repeat value="{!lineItemList}" var="itemList" >
+                  <apex:pageBlockSectionItem ><h4>Eternus Solution</h4></apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem >NSG IT Park</apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem >Aundh</apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem >Phone.020-345434</apex:pageBlockSectionItem>        
+              </apex:repeat>        
+         </apex:pageBlockSection>
+      </div>
+            
+     <div id="BillDetailAllignment" style="position:absolute; top:210px;">
+          <apex:pageBlockSection columns="1" >      
+              <apex:repeat value="{!lineItemList}" var="itemList" >
+                  <apex:pageBlockSectionItem ><h5>BILL TO</h5></apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem >{!Invoice_Statement__c.Name__c}</apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem >{!Invoice_Statement__c.Company_Name__c}</apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem >{!Invoice_Statement__c.Street_Name__c}</apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem >{!Invoice_Statement__c.City__c}</apex:pageBlockSectionItem> 
+                  <apex:pageBlockSectionItem >{!Invoice_Statement__c.Phone_Number__c}</apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem >{!Invoice_Statement__c.Email_Address__c}</apex:pageBlockSectionItem>       
+              </apex:repeat>        
+         </apex:pageBlockSection>
+      </div>
+     
+    <div id="lineItem" style="position:absolute; top:400px;">    
+    <apex:pageBlockTable value="{!lineItemList}" var="itemList" border="1px" columnsWidth="600px" >
+        <apex:column >
+            <apex:facet name="header">
+               <apex:outputPanel >
+                   <apex:outputText value="Description"></apex:outputText><br/>             
+               </apex:outputPanel>
+            </apex:facet>        
+            <apex:outputPanel >
+                <apex:outputText value="Service Fee"></apex:outputText><br/>             
+            </apex:outputPanel> 
+            <apex:outputPanel >
+                <apex:outputText value="Labor"></apex:outputText><br/>             
+            </apex:outputPanel> 
+            <apex:outputPanel >
+                <apex:outputText value="New Client Discount"></apex:outputText><br/>             
+            </apex:outputPanel> 
+            <apex:outputPanel >
+                <apex:outputText value="Tax"></apex:outputText><br/>             
+            </apex:outputPanel>              
+        </apex:column>
+   
+       <apex:column >
+           <apex:facet name="header">
+              <apex:outputPanel >
+                 <apex:outputText value="Amount"></apex:outputText><br/>             
+              </apex:outputPanel>
+           </apex:facet>        
+           <apex:outputPanel >
+               <apex:outputText value="{!itemList.Service_Fee__c}"></apex:outputText><br/>             
+           </apex:outputPanel>
+           <apex:outputPanel >
+               <apex:outputText value="{!itemList.Labour__c}"></apex:outputText><br/>             
+           </apex:outputPanel>
+           <apex:outputPanel >
+               <apex:outputText value="{!itemList.New_Client_Discount__c}"></apex:outputText><br/>             
+           </apex:outputPanel>
+           <apex:outputPanel >
+               <apex:outputText value="{!itemList.Tax__c}"></apex:outputText><br/>             
+           </apex:outputPanel>
+        </apex:column>
+   
+  </apex:pageBlockTable>   
+  </div> 
+   
+    
+    
+    <!--apex:pageBlockSection >
+     <!--apex:form >
+            <apex:pageBlockTable value="{!lineItemList}" var="itemList" border="1px">              
+                   <apex:column value="{!itemList.Product_Name__c}"/>
+                   <apex:column value="{!itemList.Price__c}"/>
+                   <apex:column value="{!itemList.Units__c}"/>
+                   <apex:column value="{!itemList.New_Client_Discount__c}"/>
+                   <apex:column value="{!itemList.Tax__c}"/>
+                   <apex:column value="{!itemList.Service_Fee__c}"/>
+                   <apex:column value="{!itemList.Total__c}"/>
+           </apex:pageBlockTable>
+      <!--/apex:form>
+     <!--/apex:pageBlockSection -->
+          
+</apex:pageBlock>     
+</apex:page>

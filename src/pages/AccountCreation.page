@@ -1,0 +1,24 @@
+<!--This Page is used for Account Creation --->
+<apex:page standardController="Account" extensions="AccountExtension"> 
+    <apex:image url="{!$Resource.accountManagementHeader}" width="200" height="100"/>   
+    <apex:form >
+        <apex:pageBlock >
+            <!-- Below Page Block Consist of form to fill account details-->
+            <apex:pageBlockSection title="Enter Account Details" >
+                <apex:inputField value="{!account.name}" required="true"/>        
+                <apex:inputField value="{!account.industry}"/>
+                <apex:inputField value="{!account.Email__c}" required="true"/>
+                <apex:inputField value="{!account.AccountNumber}"/> 
+                <apex:inputField value="{!account.Phone}"/>
+                <apex:inputField value="{!account.Website}"/>           
+            </apex:pageBlockSection>
+            
+            <!---Buttons To save and Cancel Records-->
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}" />
+                <apex:commandButton value="Cancel" immediate="true" action="{!URLFOR($Action.Account.List, $ObjectType.Account)}"/>
+                <apex:commandButton value="Save & New" action="{!saveNew}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

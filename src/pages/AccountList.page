@@ -1,0 +1,72 @@
+<!--This Page Gives List of Account and their details-->
+<apex:page standardController="Account" extensions="AccountExtension" >
+  <apex:image url="{!$Resource.accountManagementHeader}" width="200" height="100"/>
+      
+    <apex:form >
+        <apex:pageBlock title="Search" >        
+            <apex:inputText value="{!searchString}" label="Search Name" id="searchText" onkeypress="return searchOnEnter(event)"/>
+            <apex:actionFunction action="{!search}" name="searchFunction" reRender="searchAccount,errors"/>
+            <apex:commandButton value="Search records" action="{!search}" reRender="searchAccount,errors"/>  
+            <apex:commandLink value="Clear records" action="{!clear}" reRender="searchAccount"/>
+            <apex:pageMessages id="errors"/>        
+          
+            <apex:outputPanel id="searchAccount">
+             <apex:pageblockTable value="{!searchAccountList}" var="account"  rendered="{!NOT(ISNULL(searchAccountList))}">                  
+                <apex:column value="{!account.Name}"/>
+                <apex:column value="{!account.Email__c}"/>
+                <apex:column value="{!account.Phone}"/>
+                <apex:column value="{!account.Website}"/>                
+                 <!--Manage Contact of the account-->
+                <apex:column >                            
+                    <apex:commandButton value="Manage Contact" onclick="window.open('/apex/ManageAccountContactList?id={!account.id}','_parent')"/>
+                    <!--apex:commandButton value="Manage Contact" action="{!checkContactListSize}"/-->
+                    <apex:param name="currentId" value="{!account.Id}" assignTo="{!accountCurrentId}"/>             
+                </apex:column>                
+                <apex:facet name="footer"><c:countRecord count="{!searchAccountList}"/></apex:facet>          
+             </apex:pageBlockTable>
+             </apex:outputPanel> 
+                          
+        </apex:pageBlock> 
+           
+         <apex:pageBlock title="Account List" >
+            <apex:pageBlockTable value="{!accountList}" var="account" id="AccountList">
+                <!--Display Account Name-->
+                <apex:column >
+                    <apex:commandLink value="{!account.Name}" action="/{!account.id}" target="_blank"/>
+                </apex:column>
+                
+                <!--Display Account Detiails Email Phone Website-->
+                <apex:column value="{!account.Email__c}"/>
+                <apex:column value="{!account.Phone}"/>
+                <apex:column value="{!account.Website}"/>
+                
+                <!--Manage Contact of the account-->
+                <apex:column >                            
+                    <apex:commandButton value="Manage Contact" onclick="window.open('/apex/ManageAccountContactList?id={!account.id}','_parent')"/>
+                    <!--apex:commandButton value="Manage Contact" action="{!checkContactListSize}"/-->
+                    <apex:param name="currentId" value="{!account.Id}" assignTo="{!accountCurrentId}"/>             
+                </apex:column>
+              
+              <!--Footer to display Count of records-->
+            <apex:facet name="footer"><c:countRecord count="{!accountList}"/></apex:facet>   
+            </apex:pageBlockTable>
+            
+           
+         </apex:pageBlock>        
+   </apex:form> 
+   
+   <script>
+    function searchOnEnter(keyPressEvent){
+        if(window.event && window.event.keyCode == 13 || keyPressEvent.which == 13){
+            searchFunction();
+            return false;
+        }//end of if     
+        else
+        {
+                return true;
+        }//end of else
+          
+    }//end of function
+    
+    </script>     
+</apex:page>
